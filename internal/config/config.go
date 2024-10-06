@@ -15,14 +15,34 @@ type Config struct {
 
 func (cfg *Config) SetUser(name string) error {
 	cfg.CurrentUserName = name
-	err := write(cfg)
+	err := write(*cfg)
 	if err != nil {
 		return fmt.Errorf("couldn't set user")
 	}
 	return nil
 }
 
-func write(cfg *Config) error {
+func Read() (Config, error) {
+	filePath, err := getConfigFilePath()
+	if err != nil {
+		return Config{}, err
+	}
+
+	jsonData, err := os.ReadFile(filePath)
+	if err != nil {
+		return Config{}, fmt.Errorf("couldn't read file")
+	}
+
+	var cfg Config
+	err = json.Unmarshal(jsonData, &cfg)
+	if err != nil {
+		return Config{}, fmt.Errorf("couldn't unmarshal json")
+	}
+
+	return cfg, nil
+}
+
+func write(cfg Config) error {
 	jsonData, err := json.Marshal(cfg)
 	if err != nil {
 		return fmt.Errorf("couldn't marshal struct")
@@ -45,26 +65,6 @@ func write(cfg *Config) error {
 	}
 
 	return nil
-}
-
-func Read() (Config, error) {
-	filePath, err := getConfigFilePath()
-	if err != nil {
-		return Config{}, err
-	}
-
-	jsonData, err := os.ReadFile(filePath)
-	if err != nil {
-		return Config{}, fmt.Errorf("couldn't read file")
-	}
-
-	var cfg Config
-	err = json.Unmarshal(jsonData, &cfg)
-	if err != nil {
-		return Config{}, fmt.Errorf("couldn't unmarshal json")
-	}
-
-	return cfg, nil
 }
 
 func getConfigFilePath() (string, error) {

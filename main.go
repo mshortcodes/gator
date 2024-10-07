@@ -1,21 +1,43 @@
 package main
 
 import (
-	"fmt"
 	"gator/internal/config"
 	"log"
+	"os"
 )
 
+type state struct {
+	cfg *config.Config
+}
+
 func main() {
-	cfg, err := config.Read()
+	config, err := config.Read()
 	if err != nil {
 		log.Fatalf("error reading config: %v", err)
 	}
-	fmt.Printf("%+v\n", cfg)
 
-	err = cfg.SetUser("Michael")
-	if err != nil {
-		log.Fatalf("error setting user: %v", err)
+	s := &state{
+		cfg: &config,
 	}
-	fmt.Printf("%+v\n", cfg)
+
+	cmds := commands{
+		regCmds: make(map[string]func(*state, command) error),
+	}
+	cmds.register("login", handlerLogin)
+
+	args := os.Args
+	if len(args) < 2 {
+		log.Fatalf("a command is required")
+	}
+	cmdName := args[1]
+	cmdArgs := args[2:]
+	cmd := command{
+		name: cmdName,
+		args: cmdArgs,
+	}
+
+	err = cmds.run(s, cmd)
+	if err != nil {
+		log.Fatalf("error with args: %v", err)
+	}
 }

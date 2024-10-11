@@ -1,6 +1,10 @@
 package main
 
-import "fmt"
+import (
+	"context"
+	"fmt"
+	"log"
+)
 
 func handlerLogin(s *state, cmd command) error {
 	if len(cmd.args) != 1 {
@@ -8,6 +12,11 @@ func handlerLogin(s *state, cmd command) error {
 	}
 
 	user := cmd.args[0]
+	dbUser, _ := s.db.GetUser(context.Background(), user)
+	if dbUser.Name != user {
+		log.Fatalf("that account doesn't exit")
+	}
+
 	err := s.cfg.SetUser(user)
 	if err != nil {
 		return err

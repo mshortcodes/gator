@@ -36,6 +36,11 @@ func handlerRegister(s *state, cmd command) error {
 		return fmt.Errorf("couldn't set user: %v", err)
 	}
 
-	fmt.Printf("User created: %+v", dbUser)
+	printUser(dbUser)
 	return nil
+}
+
+func printUser(user database.User) {
+	fmt.Printf("Name: %s\n", user.Name)
+	fmt.Printf("ID: %s\n", user.ID)
 }

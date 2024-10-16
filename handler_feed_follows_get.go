@@ -3,14 +3,10 @@ package main
 import (
 	"context"
 	"fmt"
+	"gator/internal/database"
 )
 
-func handlerGetFeedFollows(s *state, cmd command) error {
-	user, err := s.db.GetUser(context.Background(), s.cfg.CurrentUserName)
-	if err != nil {
-		return fmt.Errorf("couldn't get user: %v", err)
-	}
-
+func handlerGetFeedFollows(s *state, cmd command, user database.User) error {
 	feedFollows, err := s.db.GetFeedFollowsForUser(context.Background(), user.ID)
 	if err != nil {
 		return fmt.Errorf("couldn't get feed follows: %v", err)

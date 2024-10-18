@@ -20,6 +20,7 @@ func handlerGetFeeds(s *state, cmd command) error {
 		fmt.Printf("Name: %s\n", feed.Name)
 		fmt.Printf("URL: %s\n", feed.Url)
 		fmt.Printf("User: %s\n", user.Name)
+		fmt.Println("====================")
 	}
 
 	return nil

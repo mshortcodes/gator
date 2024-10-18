@@ -14,7 +14,7 @@ func handlerLogin(s *state, cmd command) error {
 	user := cmd.args[0]
 	dbUser, _ := s.db.GetUser(context.Background(), user)
 	if dbUser.Name != user {
-		log.Fatalf("that account doesn't exit")
+		log.Fatalf("that account doesn't exist")
 	}
 
 	err := s.cfg.SetUser(user)

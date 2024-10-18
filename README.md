@@ -15,7 +15,7 @@
 
 ## About
 
-This is a guided project from [Boot.dev](boot.dev). It's an RSS feed aggregator and has an easy-to-use CLI.
+This is a guided project from [Boot.dev](https://www.boot.dev/tracks/backend). It's an RSS feed aggregator and has an easy-to-use CLI.
 Tools we used:
 
 - PostgreSQL database

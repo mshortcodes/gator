@@ -154,8 +154,6 @@ In psql:
 
 ```
 CREATE DATABASE gator;
-\c gator
-ALTER USER postgres PASSWORD 'postgres';
 ```
 
 3. Create a config file. Gator will look in the $HOME environment variable for this:

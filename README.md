@@ -137,17 +137,13 @@ sudo service postgresql start
 Mac:
 
 ```
-
 psql postgres
-
 ```
 
 Linux:
 
 ```
-
 sudo -u postgres psql
-
 ```
 
 In psql:
@@ -159,20 +155,16 @@ CREATE DATABASE gator;
 3. Create a config file. Gator will look in the $HOME environment variable for this:
 
 ```
-
 touch ~/.gatorconfig.json
-
 ```
 
 The config file should have this structure:
 
 ```
-
 {
   "db_url": "<connection_string>",
   "current_user_name": "<username>"
 }
-
 ```
 
 Replace <connection_string> with your database connection string:
